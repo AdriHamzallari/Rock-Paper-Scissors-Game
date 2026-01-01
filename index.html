@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .game-container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: #667eea;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .score-board {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 40px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .score-item {
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .score-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .choice-btn {
+      background: white;
+      border: 4px solid #667eea;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      font-size: 3em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .choice-btn:hover:not(:disabled) {
+      background: #667eea;
+      transform: scale(1.1);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .choice-btn:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    .choice-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result-container {
+      text-align: center;
+      min-height: 200px;
+    }
+
+    .result-display {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .player-choices {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 4em;
+    }
+
+    .vs {
+      font-size: 0.4em;
+      color: #666;
+      font-weight: bold;
+    }
+
+    .result-text {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .result-text.win {
+      color: #28a745;
+    }
+
+    .result-text.lose {
+      color: #dc3545;
+    }
+
+    .result-text.draw {
+      color: #ffc107;
+    }
+
+    .result-message {
+      color: #666;
+      font-size: 1.1em;
+    }
+
+    .reset-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .reset-btn:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+    }
+
+    .reset-btn:active {
+      transform: translateY(0);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .game-container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      .choice-btn {
+        width: 90px;
+        height: 90px;
+        font-size: 2.5em;
+      }
+
+      .player-choices {
+        font-size: 3em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎮 Rock Paper Scissors</h1>
+
+    <div class="score-board">
+      <div class="score-item">
+        <div class="score-label">Player</div>
+        <div class="score-value" id="player-score">0</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Computer</div>
+        <div class="score-value" id="computer-score">0</div>
+      </div>
+      <div class="score-item">
+        <div class="score-label">Draws</div>
+        <div class="score-value" id="draw-score">0</div>
+      </div>
+    </div>
+
+    <div class="choices">
+      <button class="choice-btn" data-choice="rock">✊</button>
+      <button class="choice-btn" data-choice="paper">✋</button>
+      <button class="choice-btn" data-choice="scissors">✌️</button>
+    </div>
+
+    <div class="result-container">
+      <div class="result-display">
+        <div class="player-choices">
+          <span id="player-choice">❓</span>
+          <span class="vs">VS</span>
+          <span id="computer-choice">❓</span>
+        </div>
+        <div class="result-text" id="result-text">Make your choice!</div>
+        <div class="result-message" id="result-message">Pick rock, paper, or scissors to start</div>
+      </div>
+
+      <button class="reset-btn hidden" id="reset-btn">Play Again</button>
+    </div>
+  </div>
+</body>
+<script src="script.js"></script>
+</html>
