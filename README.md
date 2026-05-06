@@ -10,7 +10,7 @@ A clean, interactive **Rock Paper Scissors** game built with vanilla JavaScript.
 
 ## 🚀 Live Demo
 
-> 🔗 [Play Now →]
+> 🔗 [Play Now →] (https://adrihamzallari.github.io/Rock-Paper-Scissors-Game/)
 
 ---
 
